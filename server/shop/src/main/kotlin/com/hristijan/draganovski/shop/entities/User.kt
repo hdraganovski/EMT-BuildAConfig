@@ -13,6 +13,7 @@ data class User(
         var roles: List<Role>,
         var cart: Cart,
         var purchases: List<Purchase>,
+        var configurations: List<Configuration>,
         override var createdOn: Date,
         override var modifiedOn: Date
 ) : Entity

@@ -2,12 +2,12 @@ package com.hristijan.draganovski.shop.entities
 
 import java.util.*
 
-data class Review(
+data class Comment(
         override var id: String,
-        override var createdOn: Date,
-        var userReview: UserReview,
         var body: String,
-        var stars: Int,
-        var upvoteBy: List<String>,
+        var user: UserReview,
+        var comments: List<Comment>,
+        var upvotes: List<String>,
+        override var createdOn: Date,
         override var modifiedOn: Date
 ): Entity
