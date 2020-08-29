@@ -1,2 +1,10 @@
 # EMT-BuildAConfig
-EMT
+
+## Technologies used
+- Docker
+- Mongodb
+- Graphql
+- JWT Authorization
+- Vue / Nuxt
+- Stripe
+- Kotlin

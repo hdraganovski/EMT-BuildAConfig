@@ -12,6 +12,7 @@ data class Product(
         var price: Int,
         var stock: Int,
         var type: ProductType,
+        var reviews: List<Review>,
         override var createdOn: Date,
         override var modifiedOn: Date
 ) : Entity

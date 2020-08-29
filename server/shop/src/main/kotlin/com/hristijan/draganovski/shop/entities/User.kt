@@ -11,6 +11,8 @@ data class User(
         var fullName: String,
         var imageUrl: String,
         var roles: List<Role>,
+        var cart: Cart,
+        var purchases: List<Purchase>,
         override var createdOn: Date,
         override var modifiedOn: Date
 ) : Entity
