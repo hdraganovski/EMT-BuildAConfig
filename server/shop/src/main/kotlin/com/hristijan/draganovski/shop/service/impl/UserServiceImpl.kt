@@ -1,5 +1,7 @@
 package com.hristijan.draganovski.shop.service.impl
 
+import com.hristijan.draganovski.shop.entities.Cart
+import com.hristijan.draganovski.shop.entities.Product
 import com.hristijan.draganovski.shop.entities.Role
 import com.hristijan.draganovski.shop.entities.User
 import com.hristijan.draganovski.shop.repository.UserRepo
@@ -14,18 +16,25 @@ import java.util.*
 @Service
 class UserServiceImpl(private val userRepo: UserRepo, val bCryptPasswordEncoder: BCryptPasswordEncoder) : MongoDbServiceImpl<User>(userRepo), UserService {
     override fun signUp(singUpRequest: SignUp) {
-        val user: User = User(
-                id = UUID.randomUUID().toString(),
+        val user = User(
+                id = "",
                 email = singUpRequest.email,
                 password = bCryptPasswordEncoder.encode(singUpRequest.password),
                 fullName = singUpRequest.fullName,
                 imageUrl = singUpRequest.imageUrl,
                 roles = listOf(Role.USER),
+                cart = Cart(
+                        id = UUID.randomUUID().toString(),
+                        products = listOf(),
+                        createdOn = Date(),
+                        modifiedOn = Date()
+                ),
+                configurations = listOf(),
+                purchases = listOf(),
                 createdOn = Date(),
-                modifiedOn = Date()
-        )
+                modifiedOn = Date())
 
-        userRepo.save(user)
+        super.save(user)
     }
 
     override fun loadUserByUsername(username: String?): UserDetails {
@@ -36,4 +45,6 @@ class UserServiceImpl(private val userRepo: UserRepo, val bCryptPasswordEncoder:
                     user.roles.map { SimpleGrantedAuthority("$it") })
         }
     }
+
+    override fun getEntityName(): String = Product::class.java.simpleName
 }

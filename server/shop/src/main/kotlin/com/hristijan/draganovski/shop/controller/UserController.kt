@@ -4,6 +4,7 @@ import com.hristijan.draganovski.shop.request.SignUp
 import com.hristijan.draganovski.shop.service.UserService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.bind.annotation.*
+import java.security.Principal
 
 @RestController
 @RequestMapping("/user")
@@ -14,7 +15,5 @@ class UserController(val userService: UserService) {
     }
 
     @GetMapping
-    fun getSelf() {
-
-    }
+    fun getSelf(principal: Principal): Principal = principal
 }

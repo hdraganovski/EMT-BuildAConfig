@@ -7,4 +7,4 @@ data class Cart(
         override var createdOn: Date,
         var products: List<Product>,
         override var modifiedOn: Date
-): Entity
+) : Entity
