@@ -3,7 +3,7 @@
 ## Technologies used
 - Docker
 - Mongodb
-- Graphql
+- Graphql ?
 - JWT Authorization
 - Vue / Nuxt
 - Stripe
