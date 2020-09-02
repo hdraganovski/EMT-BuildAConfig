@@ -1,36 +1,57 @@
 <template>
   <section>
     <h1>Log in</h1>
+    <br />
     <v-form @submit.prevent="logIn()" v-model="isValid">
-      <v-text-field label="Email" :rules="requiredRules" v-model="form.email"></v-text-field>
-      <v-text-field label="Password" type="password" :rules="requiredRules" v-model="form.password"></v-text-field>
-      <v-btn type="submit" :disabled="!isValid">Log in</v-btn>
+      <v-text-field v-model="form.email" :rules="[rules.required]" label="Email" filled rounded></v-text-field>
+      <v-text-field
+        v-model="form.password"
+        :type="showPassword ? 'text' : 'password'"
+        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+        :rules="[rules.required]"
+        @click:append="showPassword = !showPassword"
+        label="Password"
+        filled
+        rounded
+      ></v-text-field>
+      <v-btn :disabled="!isValid" :loading="loading" type="submit" color="primary" rounded block>Log in</v-btn>
+      <br />
+      <v-btn to="/auth/resetPassword" color="white" text small rounded block>Forgot password?</v-btn>
+      <v-btn to="/auth/signup" color="white" text small rounded block>Dont have an account?</v-btn>
     </v-form>
-    {{form}}
   </section>
 </template>
 
 <script lang="ts">
 import Vue, { PropOptions } from "vue";
-import { mapActions } from "vuex";
 import { authStore } from "~/utils/store-accessor";
+import { required } from "~/utils/validationRules";
 
 export default Vue.extend({
-  name: "YourComponent",
+  layout: "auth",
+  name: "LogIn",
   data() {
     return {
       form: {
-        email: "a",
-        password: "a",
+        email: "",
+        password: "",
       },
       isValid: false,
-      requiredRules: [(v: any) => !!v || "Required"],
+      rules: {
+        required,
+      },
+      showPassword: false,
     };
+  },
+  computed: {
+    loading() {
+      return authStore.loading;
+    },
   },
   methods: {
     logIn() {
       authStore.logIn({
-        email: this.form.email,
+        username: this.form.email,
         password: this.form.password,
       });
     },
