@@ -38,7 +38,8 @@ export default {
   */
   plugins: [
     '@/plugins/composition-api',
-    '@/plugins/axios-accesor'
+    '@/plugins/axios-accesor',
+    '@/plugins/axios-jwt-interceptor'
   ],
   /*
   ** Auto import components

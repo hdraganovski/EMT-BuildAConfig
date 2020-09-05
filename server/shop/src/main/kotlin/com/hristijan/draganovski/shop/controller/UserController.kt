@@ -20,7 +20,7 @@ class UserController(val userService: UserService) {
     fun getPrincipal(principal: Principal): Principal = principal
 
     @GetMapping("/self")
-    fun getSelf(principal: UserDetails): UserDto {
-        return userService.getSelf(principal.username)
+    fun getSelf(principal: Principal): UserDto {
+        return userService.getSelf(principal.name)
     }
 }

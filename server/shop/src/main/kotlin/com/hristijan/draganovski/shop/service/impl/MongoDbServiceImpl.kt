@@ -22,7 +22,7 @@ abstract class MongoDbServiceImpl<T : Entity<K>, K>(val repo: EntityRepo<T, K>) 
                     throw NotFoundException("${getEntityName()} not found.")
             }
 
-    override fun getByIdDot(id: String): K {
+    override fun getByIdDto(id: String): K {
       return getById(id).toDto()
     }
 

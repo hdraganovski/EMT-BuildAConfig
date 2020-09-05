@@ -8,7 +8,9 @@ import { $axios } from "~/utils/api";
 })
 export default class AuthModule extends VuexModule {
   loading: boolean = false;
-  error?: any = undefined;
+  loggedIn: boolean = false;
+  error: any = null;
+  token: string = '';
 
   @Mutation
   setLoading(loading: boolean) {
@@ -16,8 +18,18 @@ export default class AuthModule extends VuexModule {
   }
 
   @Mutation
-  setError(error?: any) {
+  setError(error: any) {
     this.error = error;
+  }
+
+  @Mutation
+  setLoggedIn(loggedIn: boolean) {
+    this.loggedIn = loggedIn;
+  }
+
+  @Mutation
+  setToken(token: string) {
+    this.token = token;
   }
 
   @Action({ rawError: true })
@@ -25,7 +37,10 @@ export default class AuthModule extends VuexModule {
     this.setLoading(true);
     try {
       let response = await $axios.post("/login", request);
-      $axios.setToken(response.headers["Authorization"]);
+      this.setToken(response.headers["authorization"]);
+      console.log(response.headers)
+      // $axios.setToken(response.headers["Authorization"], '');
+      this.setLoggedIn(true);
     } catch (error) {
       this.setError(error);
     } finally {
@@ -48,5 +63,6 @@ export default class AuthModule extends VuexModule {
   @Action({ commit: "setToken" })
   async logOut() {
     $axios.setToken(false);
+    this.setLoggedIn(false);
   }
 }

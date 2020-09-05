@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable
 interface MongoDbService<T : Entity<K>, K> {
     fun getAll(): List<K>
     fun getById(id: String): T
-    fun getByIdDot(id: String): K
+    fun getByIdDto(id: String): K
     fun sortedByCreatedOn(): List<K>
     fun getPage(pageable: Pageable): Page<K>
     fun save(entity: T): K

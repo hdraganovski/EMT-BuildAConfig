@@ -1,8 +1,8 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer app color="primary" expand-on-hover dark="">
+    <v-navigation-drawer app color="primary" expand-on-hover dark permanent>
       <v-list dense nav class="py-0">
-        <v-list-item two-line class="px-0">
+        <v-list-item two-line class="px-0" v-if="self">
           <v-list-item-avatar>
             <img src="https://randomuser.me/api/portraits/men/81.jpg" />
           </v-list-item-avatar>
@@ -11,6 +11,10 @@
             <v-list-item-title>Application</v-list-item-title>
             <v-list-item-subtitle>Subtext</v-list-item-subtitle>
           </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item>
+          Logged out
         </v-list-item>
 
         <v-divider></v-divider>
@@ -34,13 +38,13 @@
   </v-app>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue";
+import { authStore, userStore } from "~/utils/store-accessor";
+
+export default Vue.extend({
   data() {
     return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
       items: [
         {
           icon: "mdi-apps",
@@ -53,11 +57,19 @@ export default {
           to: "/inspire",
         },
       ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
       title: "Vuetify.js",
     };
   },
-};
+  computed: {
+    self() {
+      return userStore.self;
+    }
+  },
+  methods: {
+    logOut() {
+      authStore.logOut();
+      userStore.clearStore();
+    }
+  }
+});
 </script>

@@ -7,12 +7,12 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 
-abstract class BaseController<T : Entity>(val service: MongoDbService<T>) {
-    open fun getById(id: String): T {
-        return service.getById(id)
+abstract class BaseController<T : Entity<K>, K>(val service: MongoDbService<T, K>) {
+    open fun getById(id: String): K {
+        return service.getByIdDto(id)
     }
 
-    open fun getAll(params: Map<String, String>): Page<T> {
+    open fun getAll(params: Map<String, String>): Page<K> {
         val sort = if (params.containsKey(PARAM_KEY_SORT)) Sort.by(params[PARAM_KEY_SORT]) else Sort.unsorted()
 
         val pageQuery: Pageable = PageRequest.of(

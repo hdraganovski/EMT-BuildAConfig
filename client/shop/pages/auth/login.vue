@@ -55,6 +55,6 @@ export default Vue.extend({
         password: this.form.password,
       });
     },
-  },
+  }
 });
 </script>
