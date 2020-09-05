@@ -1,5 +1,6 @@
 package com.hristijan.draganovski.shop.entities
 
+import com.hristijan.draganovski.shop.dto.ConfigurationDto
 import java.util.*
 
 data class Configuration(
@@ -9,4 +10,11 @@ data class Configuration(
         var comments: List<Comment>,
         override var createdOn: Date,
         override var modifiedOn: Date
-): Entity
+): Entity<ConfigurationDto> {
+    override fun toDto(): ConfigurationDto {
+        return ConfigurationDto(id,
+                                products,
+                                upvotes.count(),
+                                comments.map { it.toDto() })
+    }
+}

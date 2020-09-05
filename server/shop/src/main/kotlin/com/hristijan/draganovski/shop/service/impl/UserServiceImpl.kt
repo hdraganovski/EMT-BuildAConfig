@@ -1,5 +1,6 @@
 package com.hristijan.draganovski.shop.service.impl
 
+import com.hristijan.draganovski.shop.dto.UserDto
 import com.hristijan.draganovski.shop.entities.Cart
 import com.hristijan.draganovski.shop.entities.Product
 import com.hristijan.draganovski.shop.entities.Role
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class UserServiceImpl(private val userRepo: UserRepo, val bCryptPasswordEncoder: BCryptPasswordEncoder) : MongoDbServiceImpl<User>(userRepo), UserService {
+class UserServiceImpl(private val userRepo: UserRepo, val bCryptPasswordEncoder: BCryptPasswordEncoder) : MongoDbServiceImpl<User, UserDto>(userRepo), UserService {
     override fun signUp(singUpRequest: SignUp) {
         val user = User(
                 id = "",
@@ -44,6 +45,10 @@ class UserServiceImpl(private val userRepo: UserRepo, val bCryptPasswordEncoder:
                     user.password,
                     user.roles.map { SimpleGrantedAuthority("$it") })
         }
+    }
+
+    override fun getSelf(email: String): UserDto {
+        return userRepo.findByEmail(email).toDto()
     }
 
     override fun getEntityName(): String = Product::class.java.simpleName

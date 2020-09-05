@@ -1,5 +1,6 @@
 package com.hristijan.draganovski.shop.entities
 
+import com.hristijan.draganovski.shop.dto.ProductDto
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.*
 
@@ -15,4 +16,17 @@ data class Product(
         var reviews: List<Review>,
         override var createdOn: Date,
         override var modifiedOn: Date
-) : Entity
+) : Entity<ProductDto> {
+    override fun toDto(): ProductDto {
+        return ProductDto(
+                id,
+                title,
+                description,
+                imageUrls,
+                price,
+                stock,
+                type,
+                reviews.map { it.toDto() }
+        )
+    }
+}

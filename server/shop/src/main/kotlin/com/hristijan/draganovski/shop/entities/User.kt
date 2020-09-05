@@ -1,5 +1,6 @@
 package com.hristijan.draganovski.shop.entities
 
+import com.hristijan.draganovski.shop.dto.UserDto
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.*
 
@@ -16,4 +17,16 @@ data class User(
         var configurations: List<Configuration>,
         override var createdOn: Date,
         override var modifiedOn: Date
-) : Entity
+) : Entity<UserDto> {
+    override fun toDto(): UserDto {
+        return UserDto(
+                id,
+                email,
+                fullName,
+                imageUrl,
+                cart.toDto(),
+                purchases.map { it.toDto() },
+                configurations.map { it.toDto() }
+        )
+    }
+}

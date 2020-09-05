@@ -5,13 +5,14 @@ import org.bson.types.ObjectId
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 
-interface MongoDbService<T : Entity> {
-    fun getAll(): List<T>
+interface MongoDbService<T : Entity<K>, K> {
+    fun getAll(): List<K>
     fun getById(id: String): T
-    fun sortedByCreatedOn(): List<T>
-    fun getPage(pageable: Pageable): Page<T>
-    fun save(entity: T): T
-    fun update(entity: T): T
+    fun getByIdDot(id: String): K
+    fun sortedByCreatedOn(): List<K>
+    fun getPage(pageable: Pageable): Page<K>
+    fun save(entity: T): K
+    fun update(entity: T): K
     fun delete(entity: T)
     fun delete(id: String)
     fun getEntityName(): String
