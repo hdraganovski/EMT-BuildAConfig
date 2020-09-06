@@ -10,13 +10,22 @@
       </v-container>
     </v-main>
 
-    <v-snackbar v-model="snackbar" :color="color" timeout="10000" top dark>{{error}}</v-snackbar>
+    <v-snackbar v-model="snackbar" :color="notification.color" timeout="10000" top dark>
+      {{notification.message}}
+      <template v-slot:action="{ attrs }">
+        <v-btn dark text v-bind="attrs" @click="snackbar = false">Close</v-btn>
+      </template>
+    </v-snackbar>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { authStore, userStore } from "~/utils/store-accessor";
+import {
+  authStore,
+  userStore,
+  notificationModule,
+} from "~/utils/store-accessor";
 
 export default Vue.extend({
   data() {
@@ -30,8 +39,8 @@ export default Vue.extend({
     loggedIn() {
       return authStore.loggedIn;
     },
-    error() {
-      return authStore.error;
+    notification() {
+      return notificationModule.notification;
     },
   },
   watch: {
@@ -41,8 +50,8 @@ export default Vue.extend({
         this.$router.push("/");
       }
     },
-    error(value) {
-      console.log(value)
+    notification(value) {
+      console.log(value);
       this.snackbar = true;
     },
   },
@@ -52,10 +61,10 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .auth-app {
   background: rgb(0, 28, 119);
-  background: linear-gradient(-45deg, rgb(0, 34, 146), rgb(0, 100, 146));
+  background: linear-gradient(-45deg, rgb(0, 28, 121), rgb(0, 127, 185));
   background-size: 400% 400%;
-  -webkit-animation: gradientBG 20s ease-in-out infinite;
-  animation: gradientBG 20s ease-in-out infinite;
+  -webkit-animation: gradientBG 10s ease-in-out infinite;
+  animation: gradientBG 10s ease-in-out infinite;
 }
 
 @-webkit-keyframes gradientBG {

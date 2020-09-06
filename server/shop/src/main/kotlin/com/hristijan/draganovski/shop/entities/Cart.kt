@@ -5,9 +5,9 @@ import java.util.*
 
 data class Cart(
         override var id: String,
-        override var createdOn: Date,
         var products: List<Product>,
-        override var modifiedOn: Date
+        override var modifiedOn: Date,
+        override var createdOn: Date
 ) : Entity<CartDto> {
     override fun toDto(): CartDto {
         return CartDto(

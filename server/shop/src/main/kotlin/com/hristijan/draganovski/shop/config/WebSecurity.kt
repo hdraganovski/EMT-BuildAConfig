@@ -22,6 +22,8 @@ class WebSecurity(private val userService: UserService, private val bCryptPasswo
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers("/samp/admin").hasRole("ADMIN")
                 .antMatchers("/samp/user").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.GET, "/category").permitAll()
+                .antMatchers("/category/*", "/category").hasAuthority("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .addFilter(JWTAuthenticationFilter(authenticationManager()))

@@ -1,6 +1,7 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import { $axios } from "~/utils/api";
-
+import { notificationModule } from "~/utils/store-accessor";
+import { NotificationType } from "~/models/enums";
 @Module({
   name: "auth",
   stateFactory: true,
@@ -10,7 +11,7 @@ export default class AuthModule extends VuexModule {
   loading: boolean = false;
   loggedIn: boolean = false;
   error: any = null;
-  token: string = '';
+  token: string = "";
 
   @Mutation
   setLoading(loading: boolean) {
@@ -32,16 +33,18 @@ export default class AuthModule extends VuexModule {
     this.token = token;
   }
 
-  @Action({ rawError: true })
+  @Action
   async logIn(request: LogInRequest) {
     this.setLoading(true);
     try {
       let response = await $axios.post("/login", request);
       this.setToken(response.headers["authorization"]);
-      console.log(response.headers)
-      // $axios.setToken(response.headers["Authorization"], '');
       this.setLoggedIn(true);
     } catch (error) {
+      notificationModule.setNotification({
+        color: NotificationType.Error,
+        message: error
+      });
       this.setError(error);
     } finally {
       this.setLoading(false);
@@ -53,7 +56,15 @@ export default class AuthModule extends VuexModule {
     this.setLoading(true);
     try {
       await $axios.post("/user", request);
+      notificationModule.setNotification({
+        color: NotificationType.Success,
+        message: "Signed up"
+      });
     } catch (error) {
+      notificationModule.setNotification({
+        color: NotificationType.Error,
+        message: error
+      });
       this.setError(error);
     } finally {
       this.setLoading(false);
@@ -62,7 +73,7 @@ export default class AuthModule extends VuexModule {
 
   @Action({ commit: "setToken" })
   async logOut() {
-    $axios.setToken(false);
     this.setLoggedIn(false);
+    this.setToken("");
   }
 }

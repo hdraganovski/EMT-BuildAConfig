@@ -62,3 +62,14 @@ export interface ReviewDto {
   stars: number;
   upvotes: number;
 }
+
+export interface Notificaton {
+  message: string;
+  color: string;
+}
+
+export interface CategoryDto {
+  id: string,
+  name: string,
+  imageUrl: string
+}

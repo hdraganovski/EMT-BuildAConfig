@@ -12,10 +12,11 @@ data class Product(
         var imageUrls: List<String>,
         var price: Int,
         var stock: Int,
-        var type: ProductType,
+        var categoryId: String,
         var reviews: List<Review>,
         override var createdOn: Date,
-        override var modifiedOn: Date
+        override var modifiedOn: Date,
+        var deletedOn: Date?
 ) : Entity<ProductDto> {
     override fun toDto(): ProductDto {
         return ProductDto(
@@ -25,7 +26,6 @@ data class Product(
                 imageUrls,
                 price,
                 stock,
-                type,
                 reviews.map { it.toDto() }
         )
     }

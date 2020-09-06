@@ -1,6 +1,6 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import { $axios } from "~/utils/api";
-import { UserDto } from "~/models/models";
+import { UserDto, CartDto } from "~/models/models";
 
 @Module({
   name: "user",
@@ -11,6 +11,14 @@ export default class UserModule extends VuexModule {
   loading: boolean = false;
   error: any = null;
   self: UserDto | null = null;
+
+  get isLoggedIn(): boolean {
+    return this.self !== null;
+  }
+
+  get cart(): CartDto | null {
+    return this.self === null ? null : this.self.cart
+  }
 
   @Mutation
   setLoading(loading: boolean) {
@@ -36,6 +44,7 @@ export default class UserModule extends VuexModule {
 
   @Action
   async getSelf() {
+    this.setError("");
     this.setLoading(true);
     try {
         let response: UserDto = await $axios.$get("/user/self");
