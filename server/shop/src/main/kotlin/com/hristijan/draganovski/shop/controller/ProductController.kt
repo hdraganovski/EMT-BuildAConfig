@@ -16,6 +16,12 @@ class ProductController(private val productService: ProductService): PageableCon
         return super.getPage(params)
     }
 
+    @GetMapping("/category/{category}")
+    fun getFromCategory(@RequestParam params: Map<String, String>): Page<ProductDto> {
+        val q = getPageQuery(params)
+        return productService.getPage(q)
+    }
+
     @GetMapping("/{id}")
     fun get(@PathVariable id: String): ProductDto {
         return productService.getByIdDto(id)

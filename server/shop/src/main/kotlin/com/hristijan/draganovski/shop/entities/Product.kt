@@ -1,6 +1,7 @@
 package com.hristijan.draganovski.shop.entities
 
 import com.hristijan.draganovski.shop.dto.ProductDto
+import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.*
 
@@ -12,7 +13,7 @@ data class Product(
         var imageUrls: List<String>,
         var price: Int,
         var stock: Int,
-        var categoryId: String,
+        @Indexed var category: String,
         var reviews: List<Review>,
         override var createdOn: Date,
         override var modifiedOn: Date,

@@ -46,9 +46,9 @@ export interface CommentDto {
 }
 
 export interface UserReview {
-    id: string,
-    fullName: string,
-    imageUrl: string
+  id: string;
+  fullName: string;
+  imageUrl: string;
 }
 
 export interface Messagee {
@@ -69,7 +69,36 @@ export interface Notificaton {
 }
 
 export interface CategoryDto {
-  id: string,
-  name: string,
-  imageUrl: string
+  id: string;
+  name: string;
+  imageUrl: string;
+}
+
+export interface Page<T> {
+  content: T[];
+  pageable: Pagable;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+  number: number;
+  size: number;
+  sort: Sort;
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
+}
+
+export interface Pagable {
+  sort: Sort;
+  offset: number;
+  pageSize: number;
+  pageNumber: number;
+  paged: boolean;
+  unpaged: boolean;
+}
+
+export interface Sort {
+  sorted: boolean;
+  unsorted: boolean;
+  empty: boolean;
 }

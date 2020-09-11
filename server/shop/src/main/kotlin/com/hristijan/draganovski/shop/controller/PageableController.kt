@@ -13,7 +13,7 @@ abstract class PageableController<T : Entity<K>, K>(private val service: MongoDb
         return service.getPage(pageQuery)
     }
 
-    private fun getPageQuery(params: Map<String, String>): Pageable {
+    protected fun getPageQuery(params: Map<String, String>): Pageable {
         val sort = if (params.containsKey(PARAM_KEY_SORT)) Sort.by(params[PARAM_KEY_SORT]) else Sort.unsorted()
 
         return PageRequest.of(

@@ -2,6 +2,7 @@ package com.hristijan.draganovski.shop.service
 
 import com.hristijan.draganovski.shop.dto.CategoryDto
 import com.hristijan.draganovski.shop.entities.Category
+import com.hristijan.draganovski.shop.exception.EntityAlreadyExistsException
 import com.hristijan.draganovski.shop.repository.CategoryRepo
 import com.hristijan.draganovski.shop.request.CategoryRequest
 import org.springframework.data.mongodb.core.query.Query
@@ -22,6 +23,19 @@ class CategoryServiceImpl(private val categoryRepo: CategoryRepo)
     }
 
     override fun createCategory(request: CategoryRequest): CategoryDto {
+        val oldCategory: Category? = categoryRepo.findByName(request.name)
+
+        if (oldCategory != null) {
+            if(oldCategory.deletedOn != null) {
+                oldCategory.deletedOn = null
+                update(oldCategory)
+                return oldCategory.toDto()
+            }
+            else {
+                throw EntityAlreadyExistsException(Category::class.java.simpleName)
+            }
+        }
+
         val now = Date()
         val category = Category(
                 UUID.randomUUID().toString(),

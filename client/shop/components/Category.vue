@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card color="indigo darken-4">
     <v-img :src="category.imageUrl" height="200px" />
     <v-card-title>{{category.name}}</v-card-title>
   </v-card>

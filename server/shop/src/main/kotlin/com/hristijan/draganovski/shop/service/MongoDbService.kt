@@ -75,3 +75,11 @@ abstract class MongoDbServiceImpl<T : Entity<K>, K>(val repo: EntityRepo<T, K>) 
         return repo.deleteById(id)
     }
 }
+
+fun <T, K> Page<T>.mapTo(lambda: (T) -> K): Page<K> {
+    return PageImpl<K>(
+            content.map(lambda),
+            pageable,
+            totalElements
+    )
+}

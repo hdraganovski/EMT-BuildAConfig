@@ -7,5 +7,5 @@ data class ProductRequest(
         var imageUrls: List<String>,
         var price: Int,
         var stock: Int,
-        var categoryId: String
+        var category: String
 )

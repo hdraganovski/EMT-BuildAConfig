@@ -2,7 +2,7 @@
   <v-layout column>
     <h1>Categories</h1>
     <div class="mgrid" v-if="!loading && !error">
-      <Category v-for="c in categories" :key="c.id" :category="c"></Category>
+      <Category v-for="c in categories" :key="c.id" :category="c" @click.native="open(c.name)"></Category>
     </div>
     <div v-if="loading">
       <v-row align="center" justify="center">
@@ -19,14 +19,15 @@
   </v-layout>
 </template>
 
-<script>
+<script lang="ts">
 import Logo from "~/components/Logo.vue";
 import VuetifyLogo from "~/components/VuetifyLogo.vue";
 import Category from "~/components/Category.vue";
 import ErrorView from "~/components/ErrorView.vue";
 import { categoryStore } from "~/utils/store-accessor";
+import Vue from "vue";
 
-export default {
+export default Vue.extend({
   components: {
     Logo,
     VuetifyLogo,
@@ -48,6 +49,12 @@ export default {
     retry() {
       categoryStore.fetchCategories();
     },
+    open(categoryName: string) {
+      console.log(categoryName);
+      this.$router.push({
+        path: "/category/" + categoryName,
+      });
+    },
   },
-};
+});
 </script>

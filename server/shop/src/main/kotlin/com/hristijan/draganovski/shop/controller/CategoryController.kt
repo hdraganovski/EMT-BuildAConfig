@@ -2,8 +2,10 @@ package com.hristijan.draganovski.shop.controller
 
 import com.hristijan.draganovski.shop.dto.CategoryDto
 import com.hristijan.draganovski.shop.dto.Message
+import com.hristijan.draganovski.shop.dto.ProductDto
 import com.hristijan.draganovski.shop.request.CategoryRequest
 import com.hristijan.draganovski.shop.service.CategoryService
+import org.springframework.data.domain.Pageable
 import org.springframework.web.bind.annotation.*
 
 @RestController
