@@ -89,12 +89,18 @@ export interface Page<T> {
 }
 
 export interface Pagable {
-  sort: Sort;
-  offset: number;
-  pageSize: number;
-  pageNumber: number;
-  paged: boolean;
-  unpaged: boolean;
+  sort?: Sort;
+  offset?: number;
+  pageSize?: number;
+  pageNumber?: number;
+  paged?: boolean;
+  unpaged?: boolean;
+}
+
+export interface PageRequest {
+  page?: number,
+  size?: number,
+  sort?: string
 }
 
 export interface Sort {

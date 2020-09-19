@@ -49,7 +49,7 @@ class ProductServiceImpl(private val productRepo: ProductRepo, private val categ
                 deletedOn = null
         )
 
-        return product.toDto()
+        return super.save(product)
     }
 
     override fun updateProduct(request: ProductRequest, id: String): ProductDto {
@@ -65,12 +65,6 @@ class ProductServiceImpl(private val productRepo: ProductRepo, private val categ
             modifiedOn = Date()
         }
 
-        productRepo.save(product)
-        return product.toDto()
-    }
-
-    override fun delete(entity: Product) {
-        entity.deletedOn = Date()
-        repo.save(entity)
+        return super.update(product)
     }
 }

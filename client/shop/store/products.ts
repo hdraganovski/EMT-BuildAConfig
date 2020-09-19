@@ -8,7 +8,7 @@ import { ProductDto, Page } from "~/models/models";
   namespaced: true
 })
 export default class ProductsModule extends VuexModule {
-  products: Page<ProductDto> | null= null;
+  products: Page<ProductDto> | null = null;
   loading: boolean = false;
   error: any = "";
 

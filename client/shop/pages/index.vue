@@ -3,6 +3,7 @@
     <h1>Categories</h1>
     <div class="mgrid" v-if="!loading && !error">
       <Category v-for="c in categories" :key="c.id" :category="c" @click.native="open(c.name)"></Category>
+    <div>.</div><div>.</div><div>.</div><div>.</div><div>.</div><div>.</div><div>.</div><div>.</div><div>.</div>
     </div>
     <div v-if="loading">
       <v-row align="center" justify="center">

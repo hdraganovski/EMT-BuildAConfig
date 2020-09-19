@@ -23,7 +23,7 @@ interface MongoDbService<T : Entity<K>, K> {
     fun getEntityName(): String
 }
 
-abstract class MongoDbServiceImpl<T : Entity<K>, K>(val repo: EntityRepo<T, K>) : MongoDbService<T, K> {
+abstract class MongoDbServiceImpl<T : Entity<K>, K>(private val repo: EntityRepo<T, K>) : MongoDbService<T, K> {
     override fun getAll(): List<K> =
             repo.findAll().map { it.toDto() }
 
@@ -45,11 +45,7 @@ abstract class MongoDbServiceImpl<T : Entity<K>, K>(val repo: EntityRepo<T, K>) 
 
     override fun getPage(pageable: Pageable): Page<K> {
         return repo.findAll(pageable).let { page ->
-            PageImpl<K>(
-                    page.content.map { it.toDto() },
-                    page.pageable,
-                    page.totalElements
-            )
+            page.mapTo { it.toDto() }
         }
     }
 
